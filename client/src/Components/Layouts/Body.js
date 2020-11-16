@@ -16,13 +16,12 @@ import {
 function Body() {
 
   const [productState, setProductState] = useState({
-    BookingID: '',
-    Service: '',
-    Assign: '',
-    Date: '',
-    Customer: '',
-    Price: '',
-    Status: ''
+    service: '',
+    assign: '',
+    date: '',
+    customer: '',
+    price: '',
+    status: ''
   })
 
   const handleOnChange = (event) => {
@@ -45,7 +44,7 @@ function Body() {
   },[])
 
   const getAPI = async () => {
-      const url = 'http://localhost:3003/get';
+      const url = 'http://localhost:4000/product';
       const data = await axios.get(url)
       .then((res) => res.data)
       .catch((err) => {
@@ -55,7 +54,7 @@ function Body() {
     }
 
   const postAPI = async() => {
-    const url = 'http://localhost:3003/create';
+    const url = 'http://localhost:4000/product';
     await axios.post(url, productState)
       .then((res) => {
         console.log(res)
@@ -72,7 +71,17 @@ function Body() {
   const handleOnSubmit = async(e) => {
     e.preventDefault()
     await postAPI();
+    setProductState({
+      service: '',
+    assign: '',
+    date: '',
+    customer: '',
+    price: '',
+    status: ''
+  
+    })
     await getAPI();
+
   }
 
   return (
@@ -83,56 +92,43 @@ function Body() {
             
             <Form inline onSubmit = {(e) => handleOnSubmit(e)}>
               <Col lg = {12} className="d-flex">
-              <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="BookingID" className="mr-sm-2">
-                  Booking ID
-                </Label>
-
-                <Input
-                  type="number"
-                  name="BookingID"
-                  placeholder="Enter a unique id"
-                  value = {productState.BookingID}
-                  onChange = {handleOnChange}
-                />
-              </FormGroup>
 
               <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="Service" className="mr-sm-2">
+                <Label for="service" className="mr-sm-2">
                   Service
                 </Label>
 
                 <Input
                   type="text"
-                  name="Service"
+                  name="service"
                   placeholder="Enter service name"
-                  value = {productState.Service}
+                  value = {productState.service}
                   onChange = {handleOnChange}
                 />
               </FormGroup>
               <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="Assign" className="mr-sm-2">
+                <Label for="assign" className="mr-sm-2">
                   Assign
                 </Label>
 
                 <Input
                   type="text"
-                  name="Assign"
+                  name="assign"
                   placeholder="Assign to?"
-                  value = {productState.Assign}
+                  value = {productState.assign}
                   onChange = {handleOnChange}
                 />
               </FormGroup>
               <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="Date" className="mr-sm-2">
+                <Label for="date" className="mr-sm-2">
                   Date
                 </Label>
 
                 <Input
                   type="date"
-                  name="Date"
+                  name="date"
                   placeholder="Enter Date"
-                  value = {productState.Date}
+                  value = {productState.date}
                   onChange = {handleOnChange}
                 />
 
@@ -143,43 +139,43 @@ function Body() {
 
               <Col lg = {12} className="d-flex mt-5">
               <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="Customer" className="mr-sm-2">
+                <Label for="customer" className="mr-sm-2">
                   Customer
                 </Label>
 
                 <Input
                   type="number"
-                  name="Customer"
+                  name="customer"
                   placeholder="Enter no. of customer"
-                  value = {productState.Customer}
+                  value = {productState.customer}
                   onChange = {handleOnChange}
                 />
               </FormGroup>
 
               <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="Price" className="mr-sm-2">
+                <Label for="price" className="mr-sm-2">
                   Price
                 </Label>
 
                 <Input
                   type="text"
-                  name="Price"
+                  name="price"
                   placeholder="Enter the price"
-                  value = {productState.Price}
+                  value = {productState.price}
                   onChange = {handleOnChange}
                 />
               </FormGroup>
 
               <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="Status" className="mr-sm-2">
+                <Label for="status" className="mr-sm-2">
                   Status
                 </Label>
 
                 <Input
                   type="text"
-                  name="Status"
+                  name="status"
                   placeholder="Status"
-                  value = {productState.Status}
+                  value = {productState.status}
                   onChange = {handleOnChange}
                 />
               </FormGroup>
@@ -213,13 +209,13 @@ function Body() {
       <tbody>
       {productData ? (productData.map((value, key) => (
                <tr key = {key}>
-               <th scope="row">{value.BookingID}</th>
-               <th scope="row">{value.Service}</th>
-               <th scope="row">{value.Assign}</th>
-               <th scope="row">{value.Date}</th>
-               <th scope="row">{value.Customer}</th>
-               <th scope="row">{value.Price}</th>
-               <th scope="row">{value.Status}</th>
+               <th scope="row">{value.bookingID}</th>
+               <th scope="row">{value.service}</th>
+               <th scope="row">{value.assign}</th>
+               <th scope="row">{value.date}</th>
+               <th scope="row">{value.customer}</th>
+               <th scope="row">{value.price}</th>
+               <th scope="row">{value.status}</th>
              </tr>
       ))) : ""}
       </tbody>
