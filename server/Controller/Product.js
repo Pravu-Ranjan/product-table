@@ -67,7 +67,13 @@ exports.delete = async (req, res) => {
     let product = await Product.destroy({
       where: { bookingID: id },
     });
-    return res.status(200).send("Data deleted");
+
+    let newData = await Product.findAll({});
+
+    return res.status(200).send({
+      message: "Data deleted!!!",
+      data: newData
+    });
   } catch (error) {
     return res.status(400).send(error);
   }

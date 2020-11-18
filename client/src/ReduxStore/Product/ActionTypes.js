@@ -1,3 +1,8 @@
 export const GET_PRODUCT = "GET_PRODUCT";
 export const SET_PRODUCT = "SET_PRODUCT";
-export const API_ERROR = "API_ERROR" 
+export const CREATE_PRODUCT = "CREATE_PRODUCT";
+export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const PRODUCT_SUCCESS = "PRODUCT_SUCCESS";
+export const PRODUCT_DELETE_SUCCESS = "PRODUCT_DELETE_SUCCESS";
+export const API_ERROR = "API_ERROR" ;

@@ -8,7 +8,8 @@ function Product(props) {
     useEffect(() => {
         props.getProduct()
     },[])
-    return (
+
+     return (
         <Fragment>
             <CreateProduct />
            <ProductList />
@@ -17,10 +18,11 @@ function Product(props) {
 }
 
 const mapStatetoProps = (state) => {
-    console.log(state.Product);
+    console.log(state);
     const product = state.Product;
-    return {product};
+    return product;
 }
 
 export default 
     connect(mapStatetoProps, { getProduct })(Product);
+

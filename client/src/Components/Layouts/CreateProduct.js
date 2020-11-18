@@ -10,6 +10,12 @@ import {
   Row,
 } from "reactstrap";
 
+import {useDispatch} from 'react-redux';
+
+import {
+  createProduct
+} from '../../ReduxStore/Actions'
+
 function CreateProduct() {
   const [productState, setProductState] = useState({
     service: "",
@@ -19,6 +25,8 @@ function CreateProduct() {
     price: "",
     status: "",
   });
+
+  const dispatch = useDispatch()
 
   const handleOnChange = (event) => {
     const name = event.target.name;
@@ -32,9 +40,7 @@ function CreateProduct() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(productState);
-    // await postAPI();
+    dispatch(createProduct(productState))
     setProductState({
       service: "",
       assign: "",
@@ -43,7 +49,6 @@ function CreateProduct() {
       price: "",
       status: "",
     });
-    // await getAPI();
   };
 
   return (
