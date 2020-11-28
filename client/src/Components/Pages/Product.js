@@ -18,7 +18,6 @@ function Product(props) {
 }
 
 const mapStatetoProps = (state) => {
-    console.log(state);
     const product = state.Product;
     return product;
 }

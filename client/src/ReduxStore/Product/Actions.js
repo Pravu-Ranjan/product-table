@@ -2,6 +2,8 @@ import {
 
     GET_PRODUCT,
     SET_PRODUCT,
+    GET_SINGLE_PRODUCT,
+    SET_SINGLE_PRODUCT,
     CREATE_PRODUCT,
     UPDATE_PRODUCT,
     PRODUCT_SUCCESS,
@@ -21,6 +23,21 @@ export const setProduct = (product, message, action) => ({
     message: message,
     action_type: action
 })
+
+export const getProductById = (product, message, action) => ({
+    type: GET_SINGLE_PRODUCT,
+    payload: product,
+    message: message,
+    action_type: action
+})
+
+export const setSingleProduct = (product, message, action) => ({
+        type: SET_SINGLE_PRODUCT,
+        payload: product,
+        message: message,
+        action_type: action
+    }
+)
 
 export const createProduct = (product) => ({
     type: CREATE_PRODUCT,

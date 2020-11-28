@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   Button,
   Col,
@@ -10,11 +10,12 @@ import {
   Row,
 } from "reactstrap";
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {
-  createProduct
+  createProduct, updateProduct
 } from '../../ReduxStore/Actions'
+import product from "../../ReduxStore/Product/Reducer";
 
 function CreateProduct() {
   const [productState, setProductState] = useState({
@@ -28,6 +29,27 @@ function CreateProduct() {
 
   const dispatch = useDispatch()
 
+  const productData = useSelector(state => state.Product);
+  let singleProductData = productData ? productData.singleProduct : '';
+
+ 
+  
+  useEffect(() => {
+   getSingleData();
+  }, [productData])
+
+  const getSingleData = () => {
+    setProductState({
+      bookingID : singleProductData ? singleProductData.bookingID : '', 
+      service : singleProductData ? singleProductData.service : '',
+      assign: singleProductData ? singleProductData.assign : '',
+      date: singleProductData ? singleProductData.data : '',
+      customer: singleProductData ? singleProductData.customer : '',
+      price: singleProductData ? singleProductData.price : '',
+      status: singleProductData ? singleProductData.status : '',
+    })
+  }
+
   const handleOnChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -40,14 +62,16 @@ function CreateProduct() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    dispatch(createProduct(productState))
+    productState.bookingID ? 
+    await dispatch(updateProduct(productState)) : await dispatch(createProduct(productState))
     setProductState({
-      service: "",
-      assign: "",
-      date: "",
-      customer: "",
-      price: "",
-      status: "",
+      bookingID:'',
+      service: '',
+      assign: '',
+      date: '',
+      customer: '',
+      price: '',
+      status: '',
     });
   };
 
@@ -67,7 +91,7 @@ function CreateProduct() {
                     type="text"
                     name="service"
                     placeholder="Enter service name"
-                    value={productState.service}
+                    value={productState.service }
                     onChange={handleOnChange}
                   />
                 </FormGroup>
@@ -144,7 +168,18 @@ function CreateProduct() {
               </Col>
 
               <Col lg={12} className="mt-5 text-center">
-                <Button>Submit</Button>
+                <Button 
+                color="primary"
+                type="submit"
+                disabled ={
+                  productState.service === "" ||
+                  productState.assign === "" ||
+                  productState.date === "" ||
+                  productState.customer === "" ||
+                  productState.price === "" || 
+                  productState.status === "" 
+                }
+                >Submit</Button>
               </Col>
             </Form>
           </Col>

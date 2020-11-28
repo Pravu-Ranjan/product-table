@@ -1,6 +1,8 @@
 import {
   GET_PRODUCT,
   SET_PRODUCT,
+  GET_SINGLE_PRODUCT,
+  SET_SINGLE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
   PRODUCT_SUCCESS,
@@ -15,10 +17,11 @@ const initialState = {
   action_type: null,
 };
 
-console.log(initialState, "initialState");
 const product = (state = initialState, action) => {
+
   let stateCopy = JSON.parse(JSON.stringify(state));
-  console.log("statecopy>>", stateCopy);
+  let index = '';
+
   switch (action.type) {
     case GET_PRODUCT:
       stateCopy.product = action.payload;
@@ -26,6 +29,14 @@ const product = (state = initialState, action) => {
 
     case SET_PRODUCT:
       stateCopy.product = action.payload;
+      return stateCopy;
+    
+    case GET_SINGLE_PRODUCT:
+      stateCopy.singleProduct = action.payload;
+      return stateCopy;
+    
+    case SET_SINGLE_PRODUCT:
+      stateCopy.singleProduct = action.payload;
       return stateCopy;
 
     case CREATE_PRODUCT:
@@ -37,19 +48,17 @@ const product = (state = initialState, action) => {
       return stateCopy;
 
     case UPDATE_PRODUCT:
-      state = {
-        ...state,
-        product: action.payload,
-        error: null,
-      };
-      break;
+      index = stateCopy.product.map((items) => items.bookingID).indexOf(action.payload.bookingID)
+      stateCopy.product.splice(index,1, action.payload);
+      return stateCopy;
 
     case DELETE_PRODUCT:
-      stateCopy.deletedProduct = action.payload;
+      index = stateCopy.product.map((items) => items.bookingID).indexOf(action.payload)
+      stateCopy.product.splice(index, 1)
       return stateCopy;
 
     case PRODUCT_DELETE_SUCCESS:
-      stateCopy.product = action.payload;
+      stateCopy.message = action.payload;
       return stateCopy;
 
     case API_ERROR:
