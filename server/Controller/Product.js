@@ -1,5 +1,6 @@
 const Product = require("../Model/Product");
 const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 exports.create = async (req, res) => {
   try {
@@ -21,7 +22,21 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   try {
     let products = await Product.findAll({});
-    return res.status(200).send(products);
+    let searchKeyword = req.query.s;
+        
+    if(!searchKeyword) {
+      return res.status(200).send(products);
+    }else {
+      searchKeyword = searchKeyword.toLowerCase();
+      products = await Product.findAll({
+        where : {[Op.or] : {
+          service:  { [Op.like]: '%' + searchKeyword + '%' },
+          assign : { [Op.like]: '%' + searchKeyword + '%' }
+        }}
+      });
+      return res.status(200).send(products);
+    }
+   
   } catch (error) {
     res.status(400).send(error);
   }
@@ -68,11 +83,8 @@ exports.delete = async (req, res) => {
       where: { bookingID: id },
     });
 
-    let newData = await Product.findAll({});
-
     return res.status(200).send({
       message: "Data deleted!!!",
-      data: newData
     });
   } catch (error) {
     return res.status(400).send(error);
