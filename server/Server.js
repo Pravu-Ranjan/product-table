@@ -16,5 +16,5 @@ const DBConnection = async () => {
   }
 };
 app.listen(PORT, DBConnection(), () =>
-  console.log(`Server up and running on port : ${PORT}`)
+  console.log(`Server up and running on port: ${PORT}`)
 );
